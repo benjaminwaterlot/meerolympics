@@ -1,7 +1,7 @@
 import { isNil, keys, cloneDeep } from 'lodash'
 import firebase from 'firebase/app'
 
-import firestore from './async-firestore'
+import firestore from '../async-firestore'
 
 export default class GenericDB {
   constructor(collectionPath) {

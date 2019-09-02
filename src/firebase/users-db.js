@@ -1,4 +1,4 @@
-import GenericDB from './generic-db'
+import GenericDB from './firestore/generic-db'
 
 export default class UsersDB extends GenericDB {
   constructor() {
