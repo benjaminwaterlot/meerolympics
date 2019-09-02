@@ -7,7 +7,7 @@ const config = {
   authDomain: 'champeero.firebaseapp.com',
   databaseURL: 'https://champeero.firebaseio.com',
   projectId: 'champeero',
-  storageBucket: '',
+  storageBucket: 'champeero.appspot.com',
   messagingSenderId: '722419987047',
   appId: '1:722419987047:web:3bbed599c968222a'
 }
