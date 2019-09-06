@@ -8,13 +8,15 @@ const DB = new Firestore({
 exports.computePlayers = functions.firestore
   .document('players/{playerId}')
   .onWrite(async () => {
-    const players = await DB.collection('players').get()
+    const raw = await DB.collection('players').get()
+    const players = []
+    raw.forEach(doc => players.push(doc.data()))
 
-    console.debug('players', players)
+    // console.debug('players', players)
 
     await DB.collection('aggregate')
       .doc('players')
-      .set(players)
+      .set({ players: players })
 
     const res = await DB.collection('aggregate')
       .doc('players')

@@ -18,5 +18,10 @@ service cloud.firestore {
       allow create: if authenticated() && request.auth.uid == userId;
       allow update, delete: if authenticated() && request.auth.uid == userId;
     }
+
+    match /{document=**} {
+      allow read, write: if request.auth.uid != null;
+    }
+
   }
 }
