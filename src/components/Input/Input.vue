@@ -1,15 +1,24 @@
 <template>
   <input
     type="text"
-    v-bind="$attrs"
-    @input="(e) => $emit('input', e.target.value)"
     class="rounded px-2 py-1 shadow-md"
+    @input="(e) => $emit('input', e.target.value)"
+    v-bind="$attrs"
   />
 </template>
 
 <script>
 export default {
-	name: 'Input'
+	name: 'Input',
+	props: {
+		focus: {
+			type: Boolean,
+			default: false
+		}
+	},
+	mounted() {
+		if (this.focus) this.$el.focus()
+	}
 }
 </script>
 

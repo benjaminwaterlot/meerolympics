@@ -5,6 +5,7 @@ import app from './app'
 import products from './products'
 import matches from './matches'
 import players from './players'
+import settings from './settings'
 
 Vue.use(Vuex)
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     app,
     products,
     matches,
+    settings,
     players
   }
 })

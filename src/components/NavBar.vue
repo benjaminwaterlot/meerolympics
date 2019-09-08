@@ -1,5 +1,5 @@
 <template>
-  <header class="navbar" :class="{ offline: !networkOnLine }">
+  <header class="navbar container mx-auto" :class="{ offline: !networkOnLine }">
     <router-link to="/home">
       <img alt="logo-bento" class="logo" src="@/assets/img/bento-starter.svg" />
       <span class="site-name title-desktop">{{ appTitle }}</span>
