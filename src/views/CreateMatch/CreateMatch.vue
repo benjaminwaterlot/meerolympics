@@ -1,19 +1,20 @@
 <template>
-  <div>
-    <h2>Create a match</h2>
-    <div v-for="(player, index) in choosePlayers" @click="() => editPlayer(index)">
-      <input v-if="choosePlayers[index].selected" v-model="input" type="text" />
-      <div v-else>Choose a player</div>
+  <div class="background">
+    <h2 class="text-3xl font-bold">Create a match</h2>
+    <div class="flex flex-wrap -mx-4 my-4">
+      <div v-for="(player, index) in choosePlayers" class="w-full md:w-1/2 h-24 px-4 my-4">
+        <Input v-if="choosePlayers[index].selected" v-model="input" />
+        <PlayerSelectionCard v-else-if="choosePlayers[index].id" v-bind="player" />
+        <PlayerSelectionEmpty v-else @click.native="editPlayer(index)" />
+      </div>
     </div>
     <div>
-      <ul>
-        <li
-          v-for="player in filterPlayers"
-          :key="player.id"
-          @click="selectPlayer(player)"
-          class="text-xl text-gray-900 leading-tight"
-        >{{ `${player.firstName} ${player.lastName}` }}</li>
-      </ul>
+      <button
+        v-for="player in filterPlayers"
+        :key="player.id"
+        @click="selectPlayer(player)"
+        class="block text-xl text-blue-300 shadow-md m-6 p-3 bg-gray-100"
+      >{{ `${player.firstName} ${player.lastName}` }}</button>
     </div>
   </div>
 </template>
@@ -21,11 +22,19 @@
 <script>
 import _ from 'lodash'
 import { mapState, mapActions } from 'vuex'
+import Input from '@/components/Input'
+import PlayerCard from '@/components/PlayerCard'
+import { PlayerSelectionCard, PlayerSelectionEmpty } from './PlayerSelection'
 
 export default {
 	name: 'CreateMatch',
+	components: {
+		Input,
+		PlayerSelectionCard,
+		PlayerSelectionEmpty
+	},
 	data: () => ({
-		choosePlayers: [{}, {}],
+		choosePlayers: [{}, {}, {}, {}],
 		input: '',
 		debouncedInput: '',
 		updateInput: null

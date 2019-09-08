@@ -9,6 +9,7 @@ import '@/firebase/init'
 import '@/firebase/authentication'
 import '@/misc/handle-apple-install-prompt'
 import 'pwacompat'
+import '@/theme/main.scss'
 
 Vue.config.productionTip = false
 

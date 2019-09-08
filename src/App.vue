@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="container mx-auto">
     <nav-bar></nav-bar>
     <div class="main-wrapper">
       <router-view />
@@ -38,11 +38,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'tailwindcss/base';
-
-@import 'tailwindcss/components';
-
-@import 'tailwindcss/utilities';
 body {
 	margin: 0;
 
