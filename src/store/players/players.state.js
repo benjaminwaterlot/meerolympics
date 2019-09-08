@@ -1,3 +1,3 @@
 export default {
-  players: null
+  players: []
 }

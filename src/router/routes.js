@@ -44,6 +44,14 @@ export default [
       )
   },
   {
+    path: '/create-match',
+    name: 'create-match',
+    component: () =>
+      import(
+        /* webpackChunkName: "client-chunk-create-match" */ '@/views/CreateMatch/CreateMatch.vue'
+      )
+  },
+  {
     path: '/products/:id',
     name: 'product',
     props: true,
