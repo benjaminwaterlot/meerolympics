@@ -6,7 +6,7 @@ export default {
     const DB = new MatchesDB()
 
     const participants = players.map(({ id }) => id)
-    // @TODO: THIS CANT SCALE TO MORE THAN 2 players
+    // @TODO: UNMOCK THIS
     const teams = players.map(player => {
       return {
         id: player.team,
@@ -19,7 +19,6 @@ export default {
 
     const id = generateMatchID({ participants: players, sport })
 
-    const createdMatch = await DB.create({ participants, teams, sport }, id)
-    return createdMatch
+    return DB.create({ participants, teams, sport }, id)
   }
 }

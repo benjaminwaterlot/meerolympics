@@ -9,17 +9,17 @@
 
 <script>
 export default {
-	name: 'Button',
-	props: {
-		color: {
-			type: String,
-			default: 'blue'
-		},
-		textColor: {
-			type: String,
-			default: 'white'
-		}
-	}
+  name: 'Button',
+  props: {
+    color: {
+      type: String,
+      default: 'green'
+    },
+    textColor: {
+      type: String,
+      default: 'white'
+    }
+  }
 }
 </script>
 

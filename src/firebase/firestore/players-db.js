@@ -1,9 +1,9 @@
 import GenericDB from './generic-db'
 
-export default class UserProductsDB extends GenericDB {
+export default class PlayersDB extends GenericDB {
   constructor() {
     super(`players`)
   }
 
-  // Here you can extend UserProductsDB with custom methods
+  // Here you can extend PlayersDB with custom methods
 }

@@ -1,4 +1,7 @@
+import Vue from 'vue'
+
 export default {
   /* Players */
-  setPlayers: (state, players) => (state.players = players)
+  setEmployees: (state, employees) => (state.employees = employees),
+  setPlayer: (state, player) => Vue.set(state.players, player.id, player)
 }

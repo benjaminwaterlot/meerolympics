@@ -1,17 +1,22 @@
 import { path } from 'ramda'
 import AggregateDB from '@/firebase/firestore/aggregate-db'
+import PlayersDB from '@/firebase/firestore/players-db'
 
 export default {
   /**
    * Fetch players
    */
-  fetchPlayers: async ({ commit, state }) => {
-    if (path(['players', 'length'], state)) return state.players
+  fetchEmployees: async ({ commit, state }) => {
+    if (state.employees.length) return state.employees
 
-    const aggregateDB = new AggregateDB()
+    const { employees } = await new AggregateDB().read('employees')
 
-    const { players } = await aggregateDB.read('players')
+    return commit('setEmployees', employees)
+  },
+  fetchPlayer: async ({ commit, state }, id) => {
+    if (state.players[id]) return state.players[id]
 
-    return commit('setPlayers', players)
+    const player = await new PlayersDB().read(id)
+    return commit('setPlayer', player)
   }
 }

@@ -12,8 +12,8 @@ import PlayersList from '@/components/PlayersList'
 import AddProduct from '@/components/AddProduct'
 
 export default {
-	components: { PlayersList, AddProduct },
-	computed: mapState('app', ['networkOnLine'])
+  components: { PlayersList, AddProduct },
+  computed: mapState('app', ['networkOnLine'])
 }
 </script>
 
@@ -21,11 +21,11 @@ export default {
 @import '@/theme/variables.scss';
 
 .players-page-title {
-	text-align: center;
-	margin-bottom: 60px;
+  text-align: center;
+  margin-bottom: 60px;
 }
 
 .players-list {
-	margin: 20px 0;
+  margin: 20px 0;
 }
 </style>
