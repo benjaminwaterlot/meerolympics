@@ -1,14 +1,13 @@
-// import PlayersDB from '@/firebase/firestore/players-db'
-import AggregateDB from '@/firebase/firestore/aggregate-db'
+import PlayersDB from '@/firebase/firestore/players-db'
 
 export default {
   /**
    * Fetch players
    */
   fetchPlayers: async ({ commit }) => {
-    const aggregateDB = new AggregateDB()
+    const aggregateDB = new PlayersDB()
 
-    const { players } = await aggregateDB.read('players')
+    const players = await aggregateDB.readAll()
     console.debug(players)
     commit('setPlayers', players)
   }

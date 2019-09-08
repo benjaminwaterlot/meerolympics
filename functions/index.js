@@ -1,8 +1,8 @@
 const admin = require('firebase-admin')
-const { computePlayers } = require('./computePlayers')
-const { updatePlayers } = require('./updatePlayers')
+const { updatePlayers } = require('./src/updatePlayers')
+const { computePlayers } = require('./src/computePlayers')
 
 admin.initializeApp()
 
-exports.computePlayers = computePlayers
 exports.updatePlayers = updatePlayers
+exports.computePlayers = computePlayers
