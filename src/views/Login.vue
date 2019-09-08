@@ -67,6 +67,10 @@ export default {
     async login() {
       this.loginError = null
       const provider = new firebase.auth.GoogleAuthProvider()
+      provider.setCustomParameters({
+        hd: 'meero.com'
+      })
+
       this.setUser(undefined)
 
       try {
