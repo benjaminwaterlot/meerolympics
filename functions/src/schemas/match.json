@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "participants": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "teams": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "participants": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "result": { "type": "string" },
+          "score": { "type": "integer" }
+        },
+        "required": ["id", "participants", "result", "score"]
+      }
+    },
+    "sport": { "type": "string" },
+    "createTimestamp": { "type": "string" },
+    "updateTimestamp": { "type": "string" }
+  },
+  "required": [
+    "participants",
+    "teams",
+    "sport",
+    "createTimestamp",
+    "updateTimestamp"
+  ]
+}

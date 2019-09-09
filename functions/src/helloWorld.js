@@ -6,9 +6,10 @@ const DB = new Firestore({
 })
 
 exports.helloWorld = functions.https.onRequest(async (request, response) => {
-  const addPlayers = await DB.collection('players').add({
-    message: 'hello world'
-  })
-  const players = (await DB.collection('players').get()).docs.map(p => p.data())
-  response.status(200).send(JSON.stringify(players, null, 10))
+  const test = (await DB.collection('players').get()).docs.map(doc =>
+    doc.data()
+  )
+
+  console.log(test)
+  response.status(200).send(test)
 })

@@ -28,6 +28,7 @@ exports.updatePlayers = functions.https.onRequest(async (request, response) => {
       photo: photoUrl,
       email: workEmail
     }))
+    .slice(0, 3)
 
   if (!(employees && employees.length)) return response.status(400).send(data)
 
