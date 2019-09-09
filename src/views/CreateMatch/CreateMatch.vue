@@ -4,6 +4,7 @@
     <div class="flex flex-wrap -mx-4 my-4">
       <div
         v-for="(player, index) in choosePlayers"
+        :key="player.id"
         class="w-full md:w-1/2 h-24 px-4 my-4"
       >
         <PlayerSelectionInput
@@ -23,7 +24,7 @@
       v-bind="player"
       @click.native="selectPlayer(player)"
     />
-    <Button v-if="sendReady" @click.native="submit" class="mx-auto block">
+    <Button v-if="sendReady" class="mx-auto block" @click.native="submit">
       Lancer le match
     </Button>
   </div>
@@ -32,7 +33,7 @@
 <script>
 import _ from 'lodash'
 import { mapState, mapActions } from 'vuex'
-import Input from '@/components/Input'
+import Vue from 'vue'
 import Button from '@/components/Button'
 import {
   PlayerSelectionCard,
@@ -40,12 +41,10 @@ import {
   PlayerSelectionInput
 } from './PlayerSelection'
 import { PlayerSuggestion } from './PlayerSuggestion'
-import Vue from 'vue'
 
 export default {
   name: 'CreateMatch',
   components: {
-    Input,
     Button,
     PlayerSelectionCard,
     PlayerSelectionEmpty,
@@ -58,15 +57,6 @@ export default {
     debouncedInput: '',
     updateInput: null
   }),
-  watch: {
-    input(newer) {
-      this.updateInput(newer)
-    }
-  },
-  created() {
-    this.updateInput = _.debounce(input => (this.debouncedInput = input), 300)
-    this.fetchEmployees()
-  },
   computed: {
     ...mapState('players', ['employees']),
     filterPlayers() {
@@ -84,6 +74,15 @@ export default {
     sendReady() {
       return this.choosePlayers.every(({ id }) => id)
     }
+  },
+  watch: {
+    input(newer) {
+      this.updateInput(newer)
+    }
+  },
+  created() {
+    this.updateInput = _.debounce(input => (this.debouncedInput = input), 300)
+    this.fetchEmployees()
   },
   methods: {
     emptyFields() {
@@ -111,6 +110,7 @@ export default {
       console.time('Match creation')
       await this.createMatch(this.choosePlayers)
       console.timeEnd('Match creation')
+
       this.$router.go()
     }
   }
