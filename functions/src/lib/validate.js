@@ -11,7 +11,7 @@ module.exports = (data, schemaName) => {
   const schema = SCHEMAS[schemaName]
   if (!schema) throw new Error(`Unknown schema ${schemaName}`)
 
-  const details = ajv.compile(schema)
-  const valid = details(data)
-  return { valid, details }
+  const validation = ajv.compile(schema)
+  const valid = validation(data)
+  return { valid, validation }
 }

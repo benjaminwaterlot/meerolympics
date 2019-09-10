@@ -7,6 +7,8 @@ const { recordMatch } = require('./src/recordMatch')
 
 admin.initializeApp()
 
+process.env.FIRESTORE_EMULATOR_HOST = 'localhost:8080'
+
 exports.updatePlayers = updatePlayers
 exports.computeEmployees = computeEmployees
 exports.helloWorld = helloWorld

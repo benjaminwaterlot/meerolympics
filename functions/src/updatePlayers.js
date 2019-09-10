@@ -7,6 +7,7 @@ const DB = new Firestore({
 })
 
 exports.updatePlayers = functions.https.onRequest(async (request, response) => {
+  console.debug(process.env.FIRESTORE_EMULATOR_HOST)
   const BAMBOO_KEY = 'd22319294a29ce15f0500a6b87e6bd5299c1dcc9'
 
   const { data } = await axios.get(

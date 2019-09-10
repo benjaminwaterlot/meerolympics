@@ -9,15 +9,16 @@ const DB = new Firestore({
 exports.computeEmployees = functions.firestore
   .document('players/{playerId}')
   .onCreate(async () => {
-    const docs = (await DB.collection('players').get()).docs.map(doc =>
-      doc.data()
-    )
+    // const docs = (await DB.collection('players').get()).docs.map(doc =>
+    //   doc.data()
+    // )
 
-    const employees = docs.map(pick(['id', 'firstName', 'lastName', 'photo']))
+    // const employees = docs.map(pick(['id', 'firstName', 'lastName', 'photo']))
 
-    console.log(`${employees.length} employees updated.`)
+    // console.log(`${employees.length} employees updated.`)
 
-    await DB.collection('aggregate')
-      .doc('employees')
-      .set({ employees })
+    // await DB.collection('aggregate')
+    //   .doc('employees')
+    //   .set({ employees })
+    return 'ok'
   })

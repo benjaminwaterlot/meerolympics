@@ -1,4 +1,5 @@
 import { isNil } from 'lodash'
+import firebase from 'firebase/app'
 import router from '@/router'
 import { createNewUserFromFirebaseAuthUser } from '@/misc/helpers'
 import UsersDB from '@/firebase/users-db'
@@ -13,6 +14,17 @@ export default {
     const user = isNil(userFromFirebase)
       ? await createNewUserFromFirebaseAuthUser(firebaseAuthUser)
       : userFromFirebase
+
+    firebase
+      .auth()
+      .currentUser.getIdToken(true)
+      .then(function(idToken) {
+        console.log('YOUGOU, Your token is ', idToken)
+        // Send token to your backend via HTTPS
+      })
+      .catch(function(error) {
+        console.log('ERROR, the error is ', error)
+      })
 
     commit('setUser', user)
     dispatch('products/getUserProducts', null, { root: true })
