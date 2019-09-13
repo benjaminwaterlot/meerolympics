@@ -8,7 +8,7 @@ export default {
   /**
    * Callback fired when user login
    */
-  login: async ({ commit, dispatch }, firebaseAuthUser) => {
+  login: async ({ commit, dispatch, state }, firebaseAuthUser) => {
     const userFromFirebase = await new UsersDB().read(firebaseAuthUser.uid)
 
     const user = isNil(userFromFirebase)
@@ -25,8 +25,9 @@ export default {
       .catch(function(error) {
         console.log('ERROR, the error is ', error)
       })
-
+    console.log('user', user)
     commit('setUser', user)
+    console.log('stateuser', state.user)
     dispatch('products/getUserProducts', null, { root: true })
   },
 
@@ -41,5 +42,12 @@ export default {
     if (!(currentRouter.meta && currentRouter.meta.authNotRequired)) {
       router.push('/login')
     }
+  },
+  getIdToken: async state => {
+    const { currentUser } = firebase.auth()
+    console.log(state.user)
+    if (!currentUser) throw new Error('NOT CONNECTED!')
+
+    return currentUser.getIdToken(true)
   }
 }

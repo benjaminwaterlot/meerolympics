@@ -20,11 +20,12 @@
     >
       Login with google
     </div>
+    <button @click="logToken">log token</button>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import { isNil } from 'lodash'
 import firebase from 'firebase/app'
 import { desktop as isDekstop } from 'is_js'
@@ -63,6 +64,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions('authentication', ['getIdToken']),
+    async logToken() {
+      console.log(await this.getIdToken())
+    },
     ...mapMutations('authentication', ['setUser']),
     async login() {
       this.loginError = null
