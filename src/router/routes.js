@@ -52,6 +52,14 @@ export default [
       )
   },
   {
+    path: '/components',
+    name: 'components',
+    component: () =>
+      import(
+        /* webpackChunkName: "client-chunk-components" */ '@/views/Components.vue'
+      )
+  },
+  {
     path: '/products/:id',
     name: 'product',
     props: true,
