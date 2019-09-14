@@ -43,14 +43,14 @@ export default [
         /* webpackChunkName: "client-chunk-create-match" */ '@/views/CreateMatch/CreateMatch.vue'
       )
   },
-  {
-    path: '/products/:id',
-    name: 'product',
-    props: true,
-    component: () =>
-      import(
-        /* webpackChunkName: "client-chunk-product-details" */ '@/views/Product.vue'
-      )
-  },
+  // {
+  //   path: '/products/:id',
+  //   name: 'product',
+  //   props: true,
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "client-chunk-product-details" */ '@/views/Product.vue'
+  //     )
+  // },
   { path: '*', redirect: '/home' }
 ]

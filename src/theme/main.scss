@@ -2,6 +2,16 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+// @font-face (Avalon, '/avalon-demi')
+@font-face {
+  font-family: 'Avalon';
+  src: url('./avalon-demi.woff2') format('woff2');
+}
+
+.font-avalon {
+  font-family: 'Avalon', sans-serif;
+}
+
 button,
 button:focus {
   outline: none;

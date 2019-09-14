@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import authentication from './authentication'
 import app from './app'
-import products from './products'
 import matches from './matches'
 import players from './players'
 import settings from './settings'
@@ -16,7 +15,6 @@ export default new Vuex.Store({
   modules: {
     authentication,
     app,
-    products,
     matches,
     settings,
     players

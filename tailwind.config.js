@@ -1,4 +1,5 @@
 module.exports = {
+  important: true,
   theme: {
     transitionProperty: {
       // defaults to these values

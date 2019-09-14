@@ -24,7 +24,11 @@
       v-bind="player"
       @click.native="selectPlayer(player)"
     />
-    <Button v-if="sendReady" class="mx-auto block" @click.native="submit">
+    <Button
+      v-if="sendReady"
+      class="mx-auto block font-avalon"
+      @click.native="submit"
+    >
       Lancer le match
     </Button>
   </div>
