@@ -1,3 +1,5 @@
 export default {
-  user: undefined
+  user: undefined,
+  player: undefined,
+  idtoken: undefined
 }

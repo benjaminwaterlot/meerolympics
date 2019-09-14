@@ -1,3 +1,7 @@
 export default {
-  setUser: (state, value) => (state.user = value)
+  setUser: (state, user) => (state.user = user),
+
+  setPlayer: (state, player) => (state.player = player),
+
+  setIdtoken: (state, idtoken) => (state.idtoken = idtoken)
 }

@@ -1,19 +1,34 @@
 <template>
   <div class="page-wrapper">
     <h1 class="players-page-title">Players page</h1>
-    <players-list class="players-list"></players-list>
-    <add-product v-if="networkOnLine"></add-product>
+    <div>
+      <div v-for="player in players" :key="player.id">
+        {{ player.firstName }} =>
+        {{ player.sports.find(({ id }) => id === 'babyfoot').elo }}
+      </div>
+    </div>
+    <!-- <players-list class="players-list"></players-list>
+    <add-product v-if="networkOnLine"></add-product> -->
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import PlayersList from '@/components/PlayersList'
-import AddProduct from '@/components/AddProduct'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  components: { PlayersList, AddProduct },
-  computed: mapState('app', ['networkOnLine'])
+  data: () => ({
+    players: []
+  }),
+  computed: mapState('app', ['networkOnLine']),
+  created() {
+    this.fetchPlayers()
+  },
+  methods: {
+    ...mapActions('players', ['fetchRanking']),
+    async fetchPlayers() {
+      this.players = await this.fetchRanking()
+    }
+  }
 }
 </script>
 
