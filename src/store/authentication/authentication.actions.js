@@ -1,34 +1,36 @@
-import { isNil } from 'lodash'
 import firebase from 'firebase/app'
 import router from '@/router'
-import { createNewUserFromFirebaseAuthUser } from '@/misc/helpers'
-import UsersDB from '@/firebase/users-db'
 
 export default {
   /**
    * Callback fired when user login
    */
-  login: async ({ commit, dispatch, state }, firebaseAuthUser) => {
-    const userFromFirebase = await new UsersDB().read(firebaseAuthUser.uid)
-
-    const user = isNil(userFromFirebase)
-      ? await createNewUserFromFirebaseAuthUser(firebaseAuthUser)
-      : userFromFirebase
-
-    firebase
+  login: async ({ commit, dispatch, state, rootGetters }) => {
+    const idtoken = await firebase
       .auth()
       .currentUser.getIdToken(true)
-      .then(function(idToken) {
-        console.log('YOUGOU, Your token is ', idToken)
-        // Send token to your backend via HTTPS
-      })
       .catch(function(error) {
         console.log('ERROR, the error is ', error)
       })
-    console.log('user', user)
+
+    commit('setIdtoken', idtoken)
+
+    const client = await rootGetters['app/client']
+
+    const getOrCreateUser = await client.put('/users').catch(err => {
+      console.error('>>> Not authenticated ; login out.')
+      console.error(err)
+      return dispatch('logout')
+    })
+
+    const user = getOrCreateUser.data.value
+    console.log('>>> User recognized as\n', { ...user, idtoken: state.idtoken })
+
+    const player = (await client.get('/players/me')).data
+    console.log('>>> Player recognized as\n', player)
+
+    commit('setPlayer', player)
     commit('setUser', user)
-    console.log('stateuser', state.user)
-    dispatch('products/getUserProducts', null, { root: true })
   },
 
   /**

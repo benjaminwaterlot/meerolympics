@@ -28,14 +28,6 @@ export default [
     }
   },
   {
-    path: '/products',
-    name: 'products',
-    component: () =>
-      import(
-        /* webpackChunkName: "client-chunk-products" */ '@/views/Products.vue'
-      )
-  },
-  {
     path: '/players',
     name: 'players',
     component: () =>

@@ -1,8 +1,14 @@
-import { path } from 'ramda'
 import AggregateDB from '@/firebase/firestore/aggregate-db'
 import PlayersDB from '@/firebase/firestore/players-db'
 
 export default {
+  fetchRanking: async ({ rootGetters }) => {
+    const { data } = await rootGetters['app/client'].get('players/ranking', {
+      params: { sport: 'babyfoot' }
+    })
+
+    return data
+  },
   /**
    * Fetch players
    */

@@ -35,7 +35,7 @@
       <img
         v-if="isUserLoggedIn && networkOnLine"
         class="user-picture can-hide"
-        :src="user.photoURL"
+        :src="player.photo"
         alt="Avatar"
       />
     </div>

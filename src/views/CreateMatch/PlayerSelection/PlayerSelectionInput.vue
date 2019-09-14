@@ -3,9 +3,9 @@
     <div class="h-16 w-16 rounded-full mr-4 bg-gray-400"></div>
     <Input
       v-bind="$attrs"
-      @input="(e) => $emit('input', e)"
       focus
       class="rounded bg-white h-12 w-3/4"
+      @input="e => $emit('input', e)"
     />
   </div>
 </template>
@@ -14,9 +14,9 @@
 import Input from '@/components/Input'
 
 export default {
-	name: 'PlayerCard',
-	components: {
-		Input
-	}
+  name: 'PlayerCard',
+  components: {
+    Input
+  }
 }
 </script>
