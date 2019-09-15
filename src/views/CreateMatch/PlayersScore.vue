@@ -19,18 +19,24 @@
           />
         </div>
       </div>
-      <div class="flex justify-center mt-8">
+      <div class="flex justify-center items-center mt-8">
         <input
           v-model="scores[team[0].team]"
           type="number"
           placeholder="Score"
-          class="p-2 bg-gray-100 rounded-lg text-center font-black text-2xl text-gray-600"
+          class="p-2 bg-gray-100 rounded-lg text-center font-black text-2xl text-gray-600 w-48"
         />
         <button
-          class="h-8 w-8 rounded-full border-2"
-          :class="winner === team[0].team ? 'bg-green-500' : ''"
+          class="h-12 w-12 rounded-full border-2 ml-8 transition-all"
+          :class="
+            winner === team[0].team
+              ? 'bg-green-500 text-white'
+              : 'bg-white text-gray-600'
+          "
           @click="winner = team[0].team"
-        />
+        >
+          <FaIcon icon="crown" />
+        </button>
       </div>
     </div>
     <button
@@ -65,7 +71,9 @@ export default {
       return teams
     },
     ready() {
-      return true
+      console.log(Object.keys(this.scores))
+      const scores = Object.keys(this.scores)
+      return this.winner && scores.length > 1 && scores.every(score => score)
     }
   },
   methods: {

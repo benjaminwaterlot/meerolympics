@@ -38,6 +38,10 @@ export default {
     selectId: {
       type: Number,
       required: true
+    },
+    players: {
+      type: Array,
+      required: true
     }
   },
   data: () => ({
@@ -61,11 +65,17 @@ export default {
       if (this.input.length < 3) return []
       const inputLower = this.input.toLowerCase()
 
-      return this.refined.filter(
-        ({ firstNameLower, lastNameLower }) =>
+      return this.refined.filter(({ firstNameLower, lastNameLower, _id }) => {
+        const filterNames =
           firstNameLower.includes(inputLower) ||
           lastNameLower.includes(inputLower)
-      )
+
+        const notAlreadySelected = !this.players.find(
+          player => player._id === _id
+        )
+
+        return filterNames && notAlreadySelected
+      })
     }
   }
 }

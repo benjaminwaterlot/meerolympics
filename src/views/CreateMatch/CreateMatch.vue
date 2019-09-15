@@ -5,6 +5,7 @@
     <PlayerSelection
       v-if="currentlySelecting"
       :select-id="currentlySelecting"
+      :players="players"
       @choose="choosePlayer"
     />
     <PlayersScore v-else-if="settingScore" :players="players" />
