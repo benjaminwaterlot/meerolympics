@@ -14,6 +14,12 @@ const environmentConfiguration = fs.existsSync(environmentConfigurationPath)
   ? require(environmentConfigurationPath) // eslint-disable-line
   : {}
 
-const config = merge(defaultConfiguration, environmentConfiguration)
+const transpileDependencies = { transpileDependencies: [/\bvue-awesome\b/] }
+
+const config = merge(
+  defaultConfiguration,
+  environmentConfiguration,
+  transpileDependencies
+)
 
 module.exports = config

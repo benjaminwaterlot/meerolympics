@@ -1,5 +1,9 @@
 import Vue from 'vue'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faPlay } from '@fortawesome/free-solid-svg-icons'
+
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -10,6 +14,10 @@ import '@/firebase/authentication'
 import '@/misc/handle-apple-install-prompt'
 import 'pwacompat'
 import '@/theme/main.scss'
+
+library.add([faPlay])
+
+Vue.component('FaIcon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
 

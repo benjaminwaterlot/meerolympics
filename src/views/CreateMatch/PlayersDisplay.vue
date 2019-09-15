@@ -13,8 +13,11 @@
       <div
         class="h-32 w-32 my-8 rounded-full bg-green-500 flex items-center justify-center"
       >
-        <span class="_vs-text text-6xl text-white font-bold font-avalon">
-          VS
+        <span class="_vs-text text-5xl text-white font-bold font-avalon">
+          <button v-if="ready" @click="$emit('start')">
+            <FaIcon class="ml-1" :icon="['fas', 'play']" />
+          </button>
+          <span v-else>VS</span>
         </span>
       </div>
       <hr class="w-1/3 border-t-2" />
@@ -48,6 +51,9 @@ export default {
   computed: {
     teams() {
       return Object.values(groupBy(({ team }) => team, this.players))
+    },
+    ready() {
+      return this.players.every(player => player._id)
     }
   }
 }
