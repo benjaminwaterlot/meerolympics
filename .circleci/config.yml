@@ -122,13 +122,14 @@ workflows:
       #       - install-dependencies
       - build:
           requires:
-            - check-prettier
-            - check-linter
-            - run-unit-tests
-            - run-e2e-tests
+            # - check-prettier
+            # - check-linter
+            # - run-unit-tests
+            # - run-e2e-tests
       # - check-bundles-sizes:
       #     requires:
       #       - build
       - deploy:
           requires:
-            - check-bundles-sizes
+            - build
+            # - check-bundles-sizes
