@@ -122,6 +122,7 @@ workflows:
       #       - install-dependencies
       - build:
           requires:
+            - install-dependencies
             # - check-prettier
             # - check-linter
             # - run-unit-tests
