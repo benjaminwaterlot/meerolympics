@@ -30,10 +30,12 @@ export default {
     ...mapGetters('app', ['newContentAvailable']),
     ...mapState('app', ['showAddToHomeScreenModalForApple', 'refreshingApp'])
   },
-  methods: mapActions('app', [
-    'closeAddToHomeScreenModalForApple',
-    'serviceWorkerSkipWaiting'
-  ])
+  methods: {
+    ...mapActions('app', [
+      'closeAddToHomeScreenModalForApple',
+      'serviceWorkerSkipWaiting'
+    ])
+  }
 }
 </script>
 
@@ -79,7 +81,7 @@ body {
 
     .main-wrapper {
       margin-top: 3.6rem;
-      padding: 20px;
+      // padding: 20px;
 
       .page-wrapper {
         width: 60%;

@@ -8,9 +8,6 @@
     <div class="links">
       <nav class="nav-links">
         <div class="nav-item">
-          <router-link to="/products">Products</router-link>
-        </div>
-        <div class="nav-item">
           <router-link to="/players">Players</router-link>
         </div>
         <div class="nav-item">

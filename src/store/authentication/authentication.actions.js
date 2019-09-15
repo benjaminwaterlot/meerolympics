@@ -31,6 +31,7 @@ export default {
 
     commit('setPlayer', player)
     commit('setUser', user)
+    dispatch('players/fetchEmployees', null, { root: true })
   },
 
   /**

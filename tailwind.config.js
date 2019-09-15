@@ -1,6 +1,26 @@
 module.exports = {
   important: true,
   theme: {
+    extend: {
+      colors: {
+        green: {
+          '100': '#ebf8f6',
+          '200': '#ebf8f6',
+          '300': '#bfe8e4',
+          '400': '#80d1ca',
+          '500': '#00a295',
+          '600': '#00847a',
+          '700': '#00847a',
+          '800': '#00847a',
+          '900': '#00847a'
+        }
+      }
+    },
+    fontFamily: {
+      display: ['Avenir', 'sans-serif'],
+      body: ['Avenir', 'sans-serif']
+    },
+    // Transition plugin
     transitionProperty: {
       // defaults to these values
       none: 'none',
