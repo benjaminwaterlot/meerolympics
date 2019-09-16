@@ -31,17 +31,13 @@ export default [
     path: '/players',
     name: 'players',
     component: () =>
-      import(
-        /* webpackChunkName: "client-chunk-players" */ '@/views/Players.vue'
-      )
+      import(/* webpackChunkName: "client-chunk-players" */ '@/views/Players/Players.vue')
   },
   {
     path: '/create-match',
     name: 'create-match',
     component: () =>
-      import(
-        /* webpackChunkName: "client-chunk-create-match" */ '@/views/CreateMatch/CreateMatch.vue'
-      )
+      import(/* webpackChunkName: "client-chunk-create-match" */ '@/views/CreateMatch/CreateMatch.vue')
   },
   // {
   //   path: '/products/:id',

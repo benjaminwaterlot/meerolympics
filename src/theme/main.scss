@@ -8,3 +8,7 @@ button,
 button:focus {
   outline: none;
 }
+
+.title {
+  @apply text-red-600; // scss-lint:disable scss(css-rcurlyexpected)
+}

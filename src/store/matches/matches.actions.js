@@ -1,5 +1,5 @@
 export default {
-  submitMatch: async ({ rootGetters, commit }, match) => {
+  submitMatch: async ({ rootGetters, commit, rootState }, match) => {
     const participants = match.participants.map(player => {
       return {
         player: player._id,
@@ -9,7 +9,7 @@ export default {
       }
     })
 
-    const sport = 'babyfoot'
+    const sport = rootState.settings.sport
 
     const req = await rootGetters['app/client'].post('/matches', {
       match: { participants, sport }

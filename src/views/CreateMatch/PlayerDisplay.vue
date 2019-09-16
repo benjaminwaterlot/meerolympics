@@ -7,7 +7,7 @@
       <div v-if="id" class="flex items-center">
         <img :src="photo" class="rounded-full h-16 w-16 mr-4" />
         <div class="flex-grow flex justify-between items-center">
-          <p class="">
+          <p class="text-left flex-grow">
             <span class="text-2xl text-gray-700 font-bold">
               {{ firstName }}
             </span>
@@ -20,6 +20,12 @@
               {{ elo }}
             </span>
           </p>
+          <button
+            class="ml-3 -mt-2 self-start text-gray-500"
+            @click="$emit('cancel', selectId)"
+          >
+            <FaIcon icon="times" />
+          </button>
         </div>
       </div>
       <div v-else class="flex items-center" @click="$emit('select', selectId)">
@@ -61,6 +67,7 @@ export default {
   },
   computed: {
     ...mapState('players', ['players']),
+    ...mapState('settings', ['sport']),
     fullPlayer() {
       if (!this.id) return null
       return this.players[this.id]
@@ -69,7 +76,7 @@ export default {
       if (!this.fullPlayer) return null
       const sport =
         this.fullPlayer.sports &&
-        this.fullPlayer.sports.find(({ id }) => id === 'babyfoot')
+        this.fullPlayer.sports.find(({ id }) => id === this.sport)
 
       return (sport && sport.elo) || '-'
     }

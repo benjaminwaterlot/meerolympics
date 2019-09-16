@@ -7,6 +7,7 @@
       v-bind="player"
       place="left"
       @select="id => $emit('select', id)"
+      @cancel="id => $emit('cancel', id)"
     />
     <div class="flex items-center justify-around">
       <hr class="w-1/3 border-t-2" />
@@ -29,6 +30,7 @@
       v-bind="player"
       place="right"
       @select="id => $emit('select', id)"
+      @cancel="id => $emit('cancel', id)"
     />
   </div>
 </template>

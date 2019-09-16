@@ -13,6 +13,7 @@
       v-else
       :players="players"
       @select="startPlayerSelection"
+      @cancel="deselect"
       @start="settingScore = true"
     />
   </div>
@@ -52,6 +53,21 @@ export default {
   methods: {
     startPlayerSelection(id) {
       this.currentlySelecting = id
+    },
+    getPlayerSlot(id) {
+      console.log(id)
+      return this.players.find(({ selectId }) => selectId === id)
+    },
+    deselect(id) {
+      // const idx = this.players.findIndex(({ selectId }) => selectId === id)
+      // const { selectId, team } = this.players[idx]
+      // this.players[idx] = { selectId, team }
+      // const playerSlot = this.getPlayerSlot(id)
+      const playerSlot = this.getPlayerSlot(id)
+      Vue.set(playerSlot, '_id', null)
+      Vue.set(playerSlot, 'firstName', null)
+      Vue.set(playerSlot, 'lastName', null)
+      Vue.set(playerSlot, 'photo', null)
     },
     ...mapActions('players', ['fetchEmployees']),
     choosePlayer({ selectId, employee }) {

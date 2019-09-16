@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPlay, faCrown } from '@fortawesome/free-solid-svg-icons'
+import { faPlay, faCrown, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import App from './App.vue'
 import router from './router'
@@ -15,7 +15,7 @@ import '@/misc/handle-apple-install-prompt'
 import 'pwacompat'
 import '@/theme/main.scss'
 
-library.add([faPlay, faCrown])
+library.add([faPlay, faCrown, faTimes])
 
 Vue.component('FaIcon', FontAwesomeIcon)
 
