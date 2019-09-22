@@ -101,7 +101,7 @@ export default {
         winner: this.winner,
         scores: this.scores
       })
-      this.$router.push({ name: 'home' })
+      this.$router.push({ name: 'matches' })
     }
   }
 }

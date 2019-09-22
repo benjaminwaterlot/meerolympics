@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-200 p-4 sm:p-8 min-h-screen">
+  <div class="bg-gray-100 p-4 sm:p-8 min-h-screen">
     <Title icon="star" text="Recent matchs" />
     <div v-for="match in sortedMatches" :key="match._id">
       <MatchItem v-bind="match" />

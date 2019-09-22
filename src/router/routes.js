@@ -1,13 +1,13 @@
-import Home from '@/views/Home'
+// import Home from '@/views/Home'
 import CheckLogin from '@/views/CheckLogin'
 
 export default [
-  {
-    path: '/home',
-    name: 'home',
-    component: Home,
-    meta: { authNotRequired: true }
-  },
+  // {
+  //   path: '/home',
+  //   name: 'home',
+  //   component: Home,
+  //   meta: { authNotRequired: true }
+  // },
   {
     path: '/check-login',
     name: 'check-login',
@@ -24,7 +24,8 @@ export default [
     path: '/players',
     name: 'players',
     component: () =>
-      import(/* webpackChunkName: "client-chunk-players" */ '@/views/Players/Players.vue')
+      import(/* webpackChunkName: "client-chunk-players" */ '@/views/Players/Players.vue'),
+    meta: { authNotRequired: true }
   },
   {
     path: '/matches',
@@ -41,14 +42,5 @@ export default [
         /* webpackChunkName: "client-chunk-create-match" */ '@/views/CreateMatch/CreateMatch.vue'
       )
   },
-  // {
-  //   path: '/products/:id',
-  //   name: 'product',
-  //   props: true,
-  //   component: () =>
-  //     import(
-  //       /* webpackChunkName: "client-chunk-product-details" */ '@/views/Product.vue'
-  //     )
-  // },
-  { path: '*', redirect: '/home' }
+  { path: '*', redirect: '/players' }
 ]

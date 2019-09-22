@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-200 p-4 sm:p-8 min-h-screen">
-    <Title icon="flag-checkered" text="Classement général" />
+    <Title icon="flag-checkered" text="General ranking" />
     <PlayerItem v-for="player in players" :key="player._id" v-bind="player" />
   </div>
 </template>

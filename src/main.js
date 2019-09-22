@@ -14,6 +14,7 @@ import {
   faChessKnight,
   faChessPawn,
   faFlagCheckered,
+  faUserAstronaut,
   faTrophy
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -40,6 +41,7 @@ library.add([
   faChessKnight,
   faChessPawn,
   faFlagCheckered,
+  faUserAstronaut,
   faTrophy
 ])
 

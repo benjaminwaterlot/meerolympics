@@ -1,6 +1,6 @@
 <template>
   <header class="navbar container mx-auto" :class="{ offline: !networkOnLine }">
-    <router-link to="/home">
+    <router-link to="/players">
       <img alt="logo-bento" class="logo" src="@/assets/img/bento-starter.svg" />
       <span class="site-name title-desktop">{{ appTitle }}</span>
       <span class="site-name title-mobile">{{ appShortTitle }}</span>
@@ -151,7 +151,7 @@ export default {
           border-bottom: 2px solid $vue-color;
         }
 
-        .router-link-active {
+        .router-link-exact-active {
           @include activatedLink;
         }
 
