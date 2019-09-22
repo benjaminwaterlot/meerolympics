@@ -4,7 +4,8 @@ import axios from 'axios'
 const production = process.env.NODE_ENV === 'production'
 
 const client = axios.create({
-  baseURL: production ? '' : 'http://localhost:3000'
+  baseURL: production ? 'https://meerolympics.herokuapp.com' : 'http://localhost:3000'
+  // baseURL: production ? 'https://meerolympics.herokuapp.com' : 'https://meerolympics.herokuapp.com'
 })
 
 export default {
