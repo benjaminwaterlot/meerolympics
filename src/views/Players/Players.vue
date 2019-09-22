@@ -1,18 +1,20 @@
 <template>
   <div class="bg-gray-200 p-4 sm:p-8 min-h-screen">
-    <h1 class="text-3xl font-bold text-center">Classement général</h1>
+    <Title icon="flag-checkered" text="Classement général" />
     <PlayerItem v-for="player in players" :key="player._id" v-bind="player" />
   </div>
 </template>
 
 <script>
+import Title from '@/components/Title/Title.vue'
 import { mapState, mapActions } from 'vuex'
-import PlayerItem from './PlayerItem.vue'
+import PlayerItem from '@/components/PlayerItem/PlayerItem.vue'
 
 export default {
   name: 'Players',
   components: {
-    PlayerItem
+    PlayerItem,
+    Title
   },
   props: {},
   data: () => ({
@@ -22,14 +24,11 @@ export default {
     ...mapState('app', ['networkOnLine']),
     ...mapState('settings', ['sport'])
   },
-  created() {
-    this.fetchPlayers()
+  async created() {
+    this.players = await this.fetchRanking()
   },
   methods: {
-    ...mapActions('players', ['fetchRanking']),
-    async fetchPlayers() {
-      this.players = await this.fetchRanking()
-    }
+    ...mapActions('players', ['fetchRanking'])
   }
 }
 </script>

@@ -2,7 +2,20 @@ import Vue from 'vue'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPlay, faCrown, faTimes } from '@fortawesome/free-solid-svg-icons'
+import {
+  faUsers,
+  faPlay,
+  faIdCardAlt,
+  faStar,
+  faCrown,
+  faTimes,
+  faChessQueen,
+  faChessRook,
+  faChessKnight,
+  faChessPawn,
+  faFlagCheckered,
+  faTrophy
+} from '@fortawesome/free-solid-svg-icons'
 
 import App from './App.vue'
 import router from './router'
@@ -15,7 +28,20 @@ import '@/misc/handle-apple-install-prompt'
 import 'pwacompat'
 import '@/theme/main.scss'
 
-library.add([faPlay, faCrown, faTimes])
+library.add([
+  faUsers,
+  faPlay,
+  faIdCardAlt,
+  faStar,
+  faCrown,
+  faTimes,
+  faChessQueen,
+  faChessRook,
+  faChessKnight,
+  faChessPawn,
+  faFlagCheckered,
+  faTrophy
+])
 
 Vue.component('FaIcon', FontAwesomeIcon)
 

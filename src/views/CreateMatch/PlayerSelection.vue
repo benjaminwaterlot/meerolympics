@@ -1,39 +1,40 @@
 <template>
   <div>
+    <Title icon="id-card-alt" text="Find a player" />
     <div>
       <input
         ref="input"
         v-model="input"
         type="text"
-        class="w-full sm:w-2/3 mx-auto my-10 block p-4 text-2xl font-bold text-center rounded-lg shadow-xl focus:outline-none"
+        :class="[
+          'block w-full sm:w-2/3',
+          'mx-auto my-10 p-4',
+          'text-2xl font-bold text-center rounded-lg shadow-xl'
+        ]"
       />
     </div>
     <div class="my-10">
-      <button
+      <PlayerItem
         v-for="employee in filtered"
         :key="employee._id"
-        class="block w-full sm:w-1/2 p-2 bg-white shadow-md rounded-lg flex items-center my-4 mx-auto"
-        @click="$emit('choose', { selectId, employee })"
-      >
-        <img :src="employee.photo" class="h-12 w-12 mr-4 rounded-full" />
-        <div class="">
-          <span class="text-xl font-bold text-gray-700">
-            {{ employee.firstName }}
-          </span>
-          <span class="text-md text-gray-600">
-            {{ employee.lastName }}
-          </span>
-        </div>
-      </button>
+        v-bind="employee"
+        @click.native="$emit('choose', { selectId, employee })"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import PlayerItem from '@/components/PlayerItem/PlayerItem.vue'
+import Title from '@/components/Title/Title.vue'
 
 export default {
   name: 'PlayerSelection',
+  components: {
+    PlayerItem,
+    Title
+  },
   props: {
     selectId: {
       type: Number,
@@ -67,12 +68,9 @@ export default {
 
       return this.refined.filter(({ firstNameLower, lastNameLower, _id }) => {
         const filterNames =
-          firstNameLower.includes(inputLower) ||
-          lastNameLower.includes(inputLower)
+          firstNameLower.includes(inputLower) || lastNameLower.includes(inputLower)
 
-        const notAlreadySelected = !this.players.find(
-          player => player._id === _id
-        )
+        const notAlreadySelected = !this.players.find(player => player._id === _id)
 
         return filterNames && notAlreadySelected
       })

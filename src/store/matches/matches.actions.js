@@ -1,4 +1,11 @@
 export default {
+  fetchMatches: async ({ rootGetters }) => {
+    const { data } = await rootGetters['app/client'].get('matches', {
+      params: { sport: 'babyfoot' }
+    })
+
+    return data
+  },
   submitMatch: async ({ rootGetters, commit, rootState }, match) => {
     const participants = match.participants.map(player => {
       return {
@@ -15,9 +22,7 @@ export default {
       match: { participants, sport }
     })
 
-    match.participants.map(({ _id }) =>
-      commit('players/resetPlayer', _id, { root: true })
-    )
+    match.participants.map(({ _id }) => commit('players/resetPlayer', _id, { root: true }))
 
     return req.data
   }

@@ -5,10 +5,17 @@
 @import './typography.scss';
 
 button,
-button:focus {
+button:focus,
+input,
+input:focus {
   outline: none;
 }
 
-.title {
-  @apply text-red-600; // scss-lint:disable scss(css-rcurlyexpected)
+.mee-card {
+  @apply shadow-lg transition-all;
+
+  &:hover {
+    @apply shadow-md;
+    transform: translate3d(0, -1px, 0);
+  }
 }

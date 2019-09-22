@@ -1,7 +1,5 @@
 <template>
   <div class="bg-gray-100 p-4 sm:p-8 min-h-screen">
-    <h1 class="text-3xl font-bold">Create a match</h1>
-
     <PlayerSelection
       v-if="currentlySelecting"
       :select-id="currentlySelecting"
@@ -48,22 +46,24 @@ export default {
   },
   created() {
     this.fetchEmployees()
-    if (this.player) this.players[0] = { ...this.players[0], ...this.player }
+    if (this.player) {
+      Vue.set(this.players[0], '_id', this.player._id)
+      Vue.set(this.players[0], 'firstName', this.player.firstName)
+      Vue.set(this.players[0], 'lastName', this.player.lastName)
+      Vue.set(this.players[0], 'photo', this.player.photo)
+    }
   },
   methods: {
     startPlayerSelection(id) {
       this.currentlySelecting = id
     },
     getPlayerSlot(id) {
-      console.log(id)
       return this.players.find(({ selectId }) => selectId === id)
     },
     deselect(id) {
-      // const idx = this.players.findIndex(({ selectId }) => selectId === id)
-      // const { selectId, team } = this.players[idx]
-      // this.players[idx] = { selectId, team }
-      // const playerSlot = this.getPlayerSlot(id)
+      console.log(id)
       const playerSlot = this.getPlayerSlot(id)
+      console.log(playerSlot)
       Vue.set(playerSlot, '_id', null)
       Vue.set(playerSlot, 'firstName', null)
       Vue.set(playerSlot, 'lastName', null)
@@ -71,12 +71,9 @@ export default {
     },
     ...mapActions('players', ['fetchEmployees']),
     choosePlayer({ selectId, employee }) {
-      const playerSlot = this.players.find(
-        player => player.selectId === selectId
-      )
+      const playerSlot = this.players.find(player => player.selectId === selectId)
 
-      for (const [propName, prop] of Object.entries(employee))
-        Vue.set(playerSlot, propName, prop)
+      for (const [propName, prop] of Object.entries(employee)) Vue.set(playerSlot, propName, prop)
 
       this.currentlySelecting = null
     }

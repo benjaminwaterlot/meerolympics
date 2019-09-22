@@ -1,9 +1,6 @@
 <template>
-  <div
-    class="flex my-4"
-    :class="place === 'left' ? 'justify-start' : 'justify-end'"
-  >
-    <button class="w-full md:w-2/3 lg:w-2/5 p-4 bg-white rounded-lg shadow-lg">
+  <div class="flex my-4" :class="place === 'left' ? 'justify-start' : 'justify-end'">
+    <button :class="['w-full md:w-2/3 lg:w-2/5', 'p-4', 'bg-white rounded-lg', 'mee-card']">
       <div v-if="id" class="flex items-center">
         <img :src="photo" class="rounded-full h-16 w-16 mr-4" />
         <div class="flex-grow flex justify-between items-center">
@@ -14,16 +11,8 @@
             <br />
             <span class="text-sm text-gray-500 font-light">{{ lastName }}</span>
           </p>
-          <p v-if="elo" class="text-green-300 font-avalon text-right">
-            <span class="font-light text-lg">ELO </span>
-            <span class="text-2xl sm:text-4xl text-green-500 font-bold">
-              {{ elo }}
-            </span>
-          </p>
-          <button
-            class="ml-3 -mt-2 self-start text-gray-500"
-            @click="$emit('cancel', selectId)"
-          >
+          <Elo :elo="elo" class="text-lg" />
+          <button class="ml-3 -mt-2 self-start text-gray-500" @click="$emit('cancel', selectId)">
             <FaIcon icon="times" />
           </button>
         </div>
@@ -41,9 +30,13 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import Elo from '@/components/Elo/Elo.vue'
 
 export default {
   name: 'PlayerDisplay',
+  components: {
+    Elo
+  },
   props: {
     firstName: {
       type: String
@@ -75,10 +68,9 @@ export default {
     elo() {
       if (!this.fullPlayer) return null
       const sport =
-        this.fullPlayer.sports &&
-        this.fullPlayer.sports.find(({ id }) => id === this.sport)
+        this.fullPlayer.sports && this.fullPlayer.sports.find(({ id }) => id === this.sport)
 
-      return (sport && sport.elo) || '-'
+      return (sport && sport.elo) || null
     }
   },
   watch: {

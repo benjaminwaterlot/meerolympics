@@ -11,16 +11,15 @@
           <router-link to="/players">Players</router-link>
         </div>
         <div class="nav-item">
-          <router-link to="/create-match">Create Match</router-link>
+          <router-link to="/matches">Matches</router-link>
+        </div>
+        <div class="nav-item">
+          <router-link to="/matches/create">Create Match</router-link>
         </div>
         <div v-if="!isUserLoggedIn && networkOnLine" class="nav-item">
           <router-link to="/login">Login</router-link>
         </div>
-        <div
-          v-if="isUserLoggedIn && networkOnLine"
-          class="nav-item logout-item"
-          @click="logout"
-        >
+        <div v-if="isUserLoggedIn && networkOnLine" class="nav-item logout-item" @click="logout">
           <a>Logout</a>
         </div>
         <div v-if="!networkOnLine" class="nav-item offline-label">Offline</div>
