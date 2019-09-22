@@ -1,64 +1,46 @@
-import Home from '@/views/Home'
+// import Home from '@/views/Home'
 import CheckLogin from '@/views/CheckLogin'
 
 export default [
-  {
-    path: '/home',
-    name: 'home',
-    component: Home,
-    meta: {
-      authNotRequired: true
-    }
-  },
+  // {
+  //   path: '/home',
+  //   name: 'home',
+  //   component: Home,
+  //   meta: { authNotRequired: true }
+  // },
   {
     path: '/check-login',
     name: 'check-login',
     component: CheckLogin,
-    meta: {
-      authNotRequired: true
-    }
+    meta: { authNotRequired: true }
   },
   {
     path: '/login',
     name: 'login',
-    component: () =>
-      import(/* webpackChunkName: "client-chunk-login" */ '@/views/Login.vue'),
-    meta: {
-      authNotRequired: true
-    }
-  },
-  {
-    path: '/products',
-    name: 'products',
-    component: () =>
-      import(
-        /* webpackChunkName: "client-chunk-products" */ '@/views/Products.vue'
-      )
+    component: () => import(/* webpackChunkName: "client-chunk-login" */ '@/views/Login.vue'),
+    meta: { authNotRequired: true }
   },
   {
     path: '/players',
     name: 'players',
     component: () =>
-      import(
-        /* webpackChunkName: "client-chunk-players" */ '@/views/Players.vue'
-      )
+      import(/* webpackChunkName: "client-chunk-players" */ '@/views/Players/Players.vue'),
+    meta: { authNotRequired: true }
   },
   {
-    path: '/create-match',
-    name: 'create-match',
+    path: '/matches',
+    name: 'matches',
+    component: () =>
+      import(/* webpackChunkName: "client-chunk-players" */ '@/views/Matches/Matches.vue'),
+    meta: { authNotRequired: true }
+  },
+  {
+    path: '/matches/create',
+    name: 'matches-create',
     component: () =>
       import(
         /* webpackChunkName: "client-chunk-create-match" */ '@/views/CreateMatch/CreateMatch.vue'
       )
   },
-  {
-    path: '/products/:id',
-    name: 'product',
-    props: true,
-    component: () =>
-      import(
-        /* webpackChunkName: "client-chunk-product-details" */ '@/views/Product.vue'
-      )
-  },
-  { path: '*', redirect: '/home' }
+  { path: '*', redirect: '/players' }
 ]

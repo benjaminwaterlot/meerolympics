@@ -2,7 +2,20 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@import './typography.scss';
+
 button,
-button:focus {
+button:focus,
+input,
+input:focus {
   outline: none;
+}
+
+.mee-card {
+  @apply shadow-lg transition-all;
+
+  &:hover {
+    @apply shadow-md;
+    transform: translate3d(0, -1px, 0);
+  }
 }

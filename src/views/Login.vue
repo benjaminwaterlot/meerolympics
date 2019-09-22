@@ -1,9 +1,11 @@
 <template>
-  <div class="page-wrapper">
-    <h1 class="login-page-title">Login page</h1>
+  <div :class="['flex flex-col items-center', 'bg-gray-100 p-4 sm:p-8 min-h-screen']">
+    <Title text="Login with Meero" icon="user-astronaut" />
 
     <!-- Loader -->
-    <div v-show="user === undefined" data-test="loader">Authenticating...</div>
+    <div v-show="user === undefined" class="m-6 text-gray-600 font-bold text-lg">
+      Authenticating...
+    </div>
 
     <!-- Offline instruction -->
     <div v-show="!networkOnLine" data-test="offline-instruction">
@@ -12,25 +14,33 @@
 
     <p v-if="loginError">{{ loginError }}</p>
     <!-- Auth UI -->
-    <div
+    <button
       v-show="user !== undefined && !user && networkOnLine"
-      data-test="login-btn"
-      class="login-btn"
+      :class="[
+        'block',
+        'rounded-lg px-6 py-2',
+        'mee-card',
+        'bg-white font-bold text-green-500 text-lg'
+      ]"
       @click="login"
     >
-      Login with google
-    </div>
+      Login
+    </button>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import { isNil } from 'lodash'
 import firebase from 'firebase/app'
 import { desktop as isDekstop } from 'is_js'
+import Title from '@/components/Title/Title.vue'
 
 export default {
   data: () => ({ loginError: null }),
+  components: {
+    Title
+  },
   head: function() {
     return {
       title: {
@@ -63,6 +73,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions('authentication', ['getIdToken']),
+    async logToken() {
+      console.log(await this.getIdToken())
+    },
     ...mapMutations('authentication', ['setUser']),
     async login() {
       this.loginError = null

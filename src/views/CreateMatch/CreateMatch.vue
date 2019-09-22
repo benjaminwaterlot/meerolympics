@@ -1,117 +1,81 @@
 <template>
-  <div class="background">
-    <h2 class="text-3xl font-bold">Create a match</h2>
-    <div class="flex flex-wrap -mx-4 my-4">
-      <div
-        v-for="(player, index) in choosePlayers"
-        :key="player.id"
-        class="w-full md:w-1/2 h-24 px-4 my-4"
-      >
-        <PlayerSelectionInput
-          v-if="choosePlayers[index].selected"
-          v-model="input"
-        />
-        <PlayerSelectionCard
-          v-else-if="choosePlayers[index].id"
-          v-bind="player"
-        />
-        <PlayerSelectionEmpty v-else @click.native="editPlayer(index)" />
-      </div>
-    </div>
-    <PlayerSuggestion
-      v-for="player in filterPlayers.slice(0, 5)"
-      :key="player.id"
-      v-bind="player"
-      @click.native="selectPlayer(player)"
+  <div class="bg-gray-100 p-4 sm:p-8 min-h-screen">
+    <PlayerSelection
+      v-if="currentlySelecting"
+      :select-id="currentlySelecting"
+      :players="players"
+      @choose="choosePlayer"
     />
-    <Button v-if="sendReady" class="mx-auto block" @click.native="submit">
-      Lancer le match
-    </Button>
+    <PlayersScore v-else-if="settingScore" :players="players" />
+    <PlayersDisplay
+      v-else
+      :players="players"
+      @select="startPlayerSelection"
+      @cancel="deselect"
+      @start="settingScore = true"
+    />
   </div>
 </template>
 
 <script>
-import _ from 'lodash'
-import { mapState, mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import Vue from 'vue'
-import Button from '@/components/Button'
-import {
-  PlayerSelectionCard,
-  PlayerSelectionEmpty,
-  PlayerSelectionInput
-} from './PlayerSelection'
-import { PlayerSuggestion } from './PlayerSuggestion'
+import PlayersDisplay from './PlayersDisplay'
+import PlayerSelection from './PlayerSelection'
+import PlayersScore from './PlayersScore'
 
 export default {
   name: 'CreateMatch',
   components: {
-    Button,
-    PlayerSelectionCard,
-    PlayerSelectionEmpty,
-    PlayerSelectionInput,
-    PlayerSuggestion
+    PlayersDisplay,
+    PlayersScore,
+    PlayerSelection
   },
   data: () => ({
-    choosePlayers: [{ team: 1 }, { team: 2 }],
-    input: '',
-    debouncedInput: '',
-    updateInput: null
+    currentlySelecting: null,
+    players: [
+      { selectId: 0, team: '1' },
+      { selectId: 1, team: '1' },
+      { selectId: 2, team: '2' },
+      { selectId: 3, team: '2' }
+    ],
+    settingScore: false
   }),
   computed: {
-    ...mapState('players', ['employees']),
-    filterPlayers() {
-      if (!(this.debouncedInput && this.debouncedInput.length > 1)) return []
-
-      const search = this.debouncedInput.toLowerCase()
-
-      // Filter the player list by first and last names.
-      return this.employees.filter(({ firstName, lastName }) =>
-        [firstName.toLowerCase(), lastName.toLowerCase()].some(name =>
-          name.includes(search)
-        )
-      )
-    },
-    sendReady() {
-      return this.choosePlayers.every(({ id }) => id)
-    }
-  },
-  watch: {
-    input(newer) {
-      this.updateInput(newer)
-    }
+    ...mapState('authentication', ['user', 'player'])
   },
   created() {
-    this.updateInput = _.debounce(input => (this.debouncedInput = input), 300)
     this.fetchEmployees()
+    if (this.player) {
+      Vue.set(this.players[0], '_id', this.player._id)
+      Vue.set(this.players[0], 'firstName', this.player.firstName)
+      Vue.set(this.players[0], 'lastName', this.player.lastName)
+      Vue.set(this.players[0], 'photo', this.player.photo)
+    }
   },
   methods: {
-    emptyFields() {
-      this.input = ''
-      this.debouncedInput = ''
+    startPlayerSelection(id) {
+      this.currentlySelecting = id
+    },
+    getPlayerSlot(id) {
+      return this.players.find(({ selectId }) => selectId === id)
+    },
+    deselect(id) {
+      console.log(id)
+      const playerSlot = this.getPlayerSlot(id)
+      console.log(playerSlot)
+      Vue.set(playerSlot, '_id', null)
+      Vue.set(playerSlot, 'firstName', null)
+      Vue.set(playerSlot, 'lastName', null)
+      Vue.set(playerSlot, 'photo', null)
     },
     ...mapActions('players', ['fetchEmployees']),
-    ...mapActions('matches', ['createMatch']),
-    editPlayer(index) {
-      this.choosePlayers = this.choosePlayers.map((player, idx) => ({
-        ...player,
-        selected: idx === index ? true : false
-      }))
-    },
-    selectPlayer(player) {
-      this.emptyFields()
-      const idx = this.choosePlayers.findIndex(({ selected }) => selected)
-      Vue.set(this.choosePlayers, idx, {
-        ...this.choosePlayers[idx],
-        ...player,
-        selected: false
-      })
-    },
-    async submit() {
-      console.time('Match creation')
-      await this.createMatch(this.choosePlayers)
-      console.timeEnd('Match creation')
+    choosePlayer({ selectId, employee }) {
+      const playerSlot = this.players.find(player => player.selectId === selectId)
 
-      this.$router.go()
+      for (const [propName, prop] of Object.entries(employee)) Vue.set(playerSlot, propName, prop)
+
+      this.currentlySelecting = null
     }
   }
 }

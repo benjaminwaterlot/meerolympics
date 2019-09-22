@@ -1,24 +1,29 @@
-import MatchesDB from '@/firebase/firestore/matches-db'
-import generateMatchID from '@/lib/generateMatchID'
-
 export default {
-  createMatch: async ({ commit, rootState }, players) => {
-    const DB = new MatchesDB()
+  fetchMatches: async ({ rootGetters }) => {
+    const { data } = await rootGetters['app/client'].get('matches', {
+      params: { sport: 'babyfoot' }
+    })
 
-    const participants = players.map(({ id }) => id)
-    // @TODO: UNMOCK THIS
-    const teams = players.map(player => {
+    return data
+  },
+  submitMatch: async ({ rootGetters, commit, rootState }, match) => {
+    const participants = match.participants.map(player => {
       return {
-        id: player.team,
-        participants: [player.id],
-        result: 'WIN',
-        score: 8
+        player: player._id,
+        team: player.team,
+        result: match.winner === player.team ? 'win' : 'loss',
+        score: Number(match.scores[player.team] || 0)
       }
     })
+
     const sport = rootState.settings.sport
 
-    const id = generateMatchID({ participants: players, sport })
+    const req = await rootGetters['app/client'].post('/matches', {
+      match: { participants, sport }
+    })
 
-    return DB.create({ participants, teams, sport }, id)
+    match.participants.map(({ _id }) => commit('players/resetPlayer', _id, { root: true }))
+
+    return req.data
   }
 }

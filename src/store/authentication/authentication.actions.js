@@ -1,21 +1,37 @@
-import { isNil } from 'lodash'
+import firebase from 'firebase/app'
 import router from '@/router'
-import { createNewUserFromFirebaseAuthUser } from '@/misc/helpers'
-import UsersDB from '@/firebase/users-db'
 
 export default {
   /**
    * Callback fired when user login
    */
-  login: async ({ commit, dispatch }, firebaseAuthUser) => {
-    const userFromFirebase = await new UsersDB().read(firebaseAuthUser.uid)
+  login: async ({ commit, dispatch, state, rootGetters }) => {
+    const idtoken = await firebase
+      .auth()
+      .currentUser.getIdToken(true)
+      .catch(function(error) {
+        console.log('ERROR, the error is ', error)
+      })
 
-    const user = isNil(userFromFirebase)
-      ? await createNewUserFromFirebaseAuthUser(firebaseAuthUser)
-      : userFromFirebase
+    commit('setIdtoken', idtoken)
 
+    const client = await rootGetters['app/client']
+
+    const getOrCreateUser = await client.put('/users').catch(err => {
+      console.error('>>> Not authenticated ; login out.')
+      console.error(err)
+      return dispatch('logout')
+    })
+
+    const user = getOrCreateUser.data.value
+    console.log('>>> User recognized as\n', { ...user, idtoken: state.idtoken })
+
+    const player = (await client.get('/players/me')).data
+    console.log('>>> Player recognized as\n', player)
+
+    commit('setPlayer', player)
     commit('setUser', user)
-    dispatch('products/getUserProducts', null, { root: true })
+    dispatch('players/fetchEmployees', null, { root: true })
   },
 
   /**
@@ -23,11 +39,17 @@ export default {
    */
   logout: ({ commit }) => {
     commit('setUser', null)
-    commit('products/setProducts', null, { root: true })
 
     const currentRouter = router.app.$route
     if (!(currentRouter.meta && currentRouter.meta.authNotRequired)) {
       router.push('/login')
     }
+  },
+  getIdToken: async state => {
+    const { currentUser } = firebase.auth()
+    console.log(state.user)
+    if (!currentUser) throw new Error('NOT CONNECTED!')
+
+    return currentUser.getIdToken(true)
   }
 }
