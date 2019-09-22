@@ -1,40 +1,57 @@
 <template>
-  <div id="app" class="container mx-auto">
-    <nav-bar></nav-bar>
-    <div class="main-wrapper">
-      <router-view />
+  <vue-drawer-layout ref="drawer" @mask-click="$refs.drawer.toggle()">
+    <div class="bg-gray-100 h-full" slot="drawer" :enable="drawer">
+      <Drawer @close="$refs.drawer.toggle(false)" />
     </div>
+    <div slot="content">
+      <div id="app" class="container mx-auto">
+        <NavBar @openMenu="$refs.drawer.toggle()" />
+        <div class="main-wrapper">
+          <router-view />
+        </div>
 
-    <new-content-available-toastr
-      v-if="newContentAvailable"
-      class="new-content-available-toastr"
-      :refreshing-app="refreshingApp"
-      @refresh="serviceWorkerSkipWaiting"
-    ></new-content-available-toastr>
-    <apple-add-to-home-screen-modal
-      v-if="showAddToHomeScreenModalForApple"
-      class="apple-add-to-home-screen-modal"
-      @close="closeAddToHomeScreenModalForApple(false)"
-    ></apple-add-to-home-screen-modal>
-  </div>
+        <new-content-available-toastr
+          v-if="newContentAvailable"
+          class="new-content-available-toastr"
+          :refreshing-app="refreshingApp"
+          @refresh="serviceWorkerSkipWaiting"
+        ></new-content-available-toastr>
+        <apple-add-to-home-screen-modal
+          v-if="showAddToHomeScreenModalForApple"
+          class="apple-add-to-home-screen-modal"
+          @close="closeAddToHomeScreenModalForApple(false)"
+        ></apple-add-to-home-screen-modal>
+      </div>
+    </div>
+  </vue-drawer-layout>
 </template>
+
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
 import NavBar from '@/components/NavBar'
 import NewContentAvailableToastr from '@/components/NewContentAvailableToastr'
 import AppleAddToHomeScreenModal from '@/components/AppleAddToHomeScreenModal'
+import Drawer from '@/components/Drawer/Drawer.vue'
 
 export default {
-  components: { NavBar, NewContentAvailableToastr, AppleAddToHomeScreenModal },
+  components: {
+    NavBar,
+    NewContentAvailableToastr,
+    AppleAddToHomeScreenModal,
+    Drawer
+  },
+  data: () => ({
+    drawer: false
+  }),
   computed: {
     ...mapGetters('app', ['newContentAvailable']),
     ...mapState('app', ['showAddToHomeScreenModalForApple', 'refreshingApp'])
   },
   methods: {
-    ...mapActions('app', [
-      'closeAddToHomeScreenModalForApple',
-      'serviceWorkerSkipWaiting'
-    ])
+    ...mapActions('app', ['closeAddToHomeScreenModalForApple', 'serviceWorkerSkipWaiting']),
+    openMenu() {
+      this.$refs.drawer.toggle()
+    }
   }
 }
 </script>
@@ -53,9 +70,8 @@ body {
   }
 
   #app {
-    font-family: Avenir, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-      Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-      sans-serif;
+    font-family: Avenir, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+      Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 16px;

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 
+import DrawerLayout from 'vue-drawer-layout'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
@@ -15,6 +16,7 @@ import {
   faChessPawn,
   faFlagCheckered,
   faUserAstronaut,
+  faBars,
   faTrophy
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -42,12 +44,14 @@ library.add([
   faChessPawn,
   faFlagCheckered,
   faUserAstronaut,
+  faBars,
   faTrophy
 ])
 
 Vue.component('FaIcon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
+Vue.use(DrawerLayout)
 
 new Vue({
   router,

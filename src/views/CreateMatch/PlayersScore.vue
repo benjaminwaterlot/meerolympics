@@ -45,8 +45,9 @@
         </button>
       </div>
     </div>
+    <Loader v-if="loading" class="mx-auto my-20" />
     <button
-      v-if="ready"
+      v-else-if="ready"
       :class="[
         'mee-card',
         'block px-6 py-2',
@@ -61,12 +62,14 @@
 
 <script>
 import Title from '@/components/Title/Title.vue'
+import Loader from '@/components/Loader/Loader.vue'
 import { groupBy } from 'ramda'
 import { mapActions } from 'vuex'
 
 export default {
   name: 'PlayersScore',
   components: {
+    Loader,
     Title
   },
   props: {
@@ -77,7 +80,8 @@ export default {
   },
   data: () => ({
     scores: {},
-    winner: null
+    winner: null,
+    loading: null
   }),
   computed: {
     teams() {
@@ -96,11 +100,13 @@ export default {
       return this.winner === team[0].team
     },
     async submit() {
+      this.loading = true
       await this.submitMatch({
         participants: this.players,
         winner: this.winner,
         scores: this.scores
       })
+      this.loading = false
       this.$router.push({ name: 'matches' })
     }
   }

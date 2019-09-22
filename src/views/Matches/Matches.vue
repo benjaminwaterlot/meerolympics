@@ -1,6 +1,7 @@
 <template>
   <div class="bg-gray-100 p-4 sm:p-8 min-h-screen">
     <Title icon="star" text="Recent matchs" />
+    <Loader v-if="loading" class="mx-auto my-20" />
     <div v-for="match in sortedMatches" :key="match._id">
       <MatchItem v-bind="match" />
     </div>
@@ -11,16 +12,19 @@
 import { mapActions, mapState } from 'vuex'
 import MatchItem from '@/components/MatchItem/MatchItem.vue'
 import Title from '@/components/Title/Title.vue'
+import Loader from '@/components/Loader/Loader.vue'
 import moment from 'moment'
 
 export default {
   name: 'Matches',
   components: {
     MatchItem,
+    Loader,
     Title
   },
   data: () => ({
-    matches: []
+    matches: [],
+    loading: false
   }),
   computed: {
     ...mapState('settings', ['sport']),
@@ -36,7 +40,9 @@ export default {
     }
   },
   async created() {
+    this.loading = true
     this.matches = await this.fetchMatches()
+    this.loading = false
   },
   methods: {
     ...mapActions('matches', ['fetchMatches'])

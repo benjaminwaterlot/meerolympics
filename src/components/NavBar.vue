@@ -1,20 +1,24 @@
 <template>
   <header class="navbar container mx-auto" :class="{ offline: !networkOnLine }">
     <router-link to="/players">
-      <img alt="logo-bento" class="logo" src="@/assets/img/bento-starter.svg" />
-      <span class="site-name title-desktop">{{ appTitle }}</span>
-      <span class="site-name title-mobile">{{ appShortTitle }}</span>
+      <img alt="logo-bento" class="logo h-8 w-8" src="@/assets/img/logo-short.svg" />
+      <span class="site-name title-desktop text-green-500">{{ appTitle }}</span>
+      <span class="site-name title-mobile text-green-500">{{ appShortTitle }}</span>
     </router-link>
     <div class="links">
-      <nav class="nav-links">
+      <button class="block sm:hidden font-bold text-lg" @click="$emit('openMenu')">
+        <span class="xs-hide">Menu</span>
+        <FaIcon icon="bars" class="ml-3" />
+      </button>
+      <nav class="nav-links hidden sm:block">
         <div class="nav-item">
-          <router-link to="/players">Players</router-link>
+          <router-link to="/players">Ranking</router-link>
         </div>
         <div class="nav-item">
           <router-link to="/matches">Matches</router-link>
         </div>
         <div class="nav-item">
-          <router-link to="/matches/create">Create Match</router-link>
+          <router-link to="/matches/create">Play</router-link>
         </div>
         <div v-if="!isUserLoggedIn && networkOnLine" class="nav-item">
           <router-link to="/login">Login</router-link>
@@ -27,7 +31,7 @@
 
       <img
         v-if="isUserLoggedIn && networkOnLine"
-        class="user-picture can-hide"
+        class="user-picture"
         :src="player.photo"
         alt="Avatar"
       />
@@ -80,6 +84,12 @@ export default {
 
   .title-mobile {
     display: none;
+  }
+
+  @media (max-width: 360px) {
+    .xs-hide {
+      display: none;
+    }
   }
 
   @media (max-width: 500px) {
@@ -148,7 +158,7 @@ export default {
 
         @mixin activatedLink() {
           margin-bottom: -2px;
-          border-bottom: 2px solid $vue-color;
+          border-bottom: 2px solid #00a295;
         }
 
         .router-link-exact-active {

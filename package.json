@@ -30,6 +30,7 @@
     "tailwindcss-transforms": "^2.2.0",
     "tailwindcss-transitions": "^2.1.0",
     "vue": "*",
+    "vue-drawer-layout": "^1.3.0",
     "vue-head": "*",
     "vue-router": "*",
     "vuex": "*"
