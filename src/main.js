@@ -1,10 +1,10 @@
 import Vue from 'vue'
 
-import DrawerLayout from 'vue-drawer-layout'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   faUsers,
+  faUserNinja,
   faPlay,
   faIdCardAlt,
   faStar,
@@ -33,6 +33,7 @@ import '@/theme/main.scss'
 
 library.add([
   faUsers,
+  faUserNinja,
   faPlay,
   faIdCardAlt,
   faStar,
@@ -51,7 +52,6 @@ library.add([
 Vue.component('FaIcon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
-Vue.use(DrawerLayout)
 
 new Vue({
   router,

@@ -6,7 +6,7 @@
       <span class="site-name title-mobile text-green-500">{{ appShortTitle }}</span>
     </router-link>
     <div class="links">
-      <button class="block sm:hidden font-bold text-lg" @click="$emit('openMenu')">
+      <button class="block sm:hidden font-bold text-lg" @click="$router.push('/menu')">
         <span class="xs-hide">Menu</span>
         <FaIcon icon="bars" class="ml-3" />
       </button>

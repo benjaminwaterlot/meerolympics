@@ -1,24 +1,29 @@
 export default [
   {
     label: 'Ranking',
-    route: '/players'
+    route: '/players',
+    icon: 'flag-checkered'
   },
   {
     label: 'Matches',
-    route: '/matches'
+    route: '/matches',
+    icon: 'star'
   },
   {
     label: 'Play',
-    route: '/matches/create'
+    route: '/matches/create',
+    icon: 'trophy'
   },
   {
     label: 'Login',
     route: '/login',
-    isLogged: false
+    isLogged: false,
+    icon: 'user-astronaut'
   },
   {
     label: 'Logout',
     route: '/logout',
-    isLogged: true
+    isLogged: true,
+    icon: 'user-ninja'
   }
 ]

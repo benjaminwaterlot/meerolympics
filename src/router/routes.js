@@ -1,5 +1,6 @@
 // import Home from '@/views/Home'
 import CheckLogin from '@/views/CheckLogin'
+import Menu from '@/views/Menu/Menu.vue'
 
 export default [
   // {
@@ -8,6 +9,12 @@ export default [
   //   component: Home,
   //   meta: { authNotRequired: true }
   // },
+  {
+    path: '/menu',
+    name: 'menu',
+    component: Menu,
+    meta: { authNotRequired: true }
+  },
   {
     path: '/check-login',
     name: 'check-login',
@@ -38,9 +45,7 @@ export default [
     path: '/matches/create',
     name: 'matches-create',
     component: () =>
-      import(
-        /* webpackChunkName: "client-chunk-create-match" */ '@/views/CreateMatch/CreateMatch.vue'
-      )
+      import(/* webpackChunkName: "client-chunk-create-match" */ '@/views/CreateMatch/CreateMatch.vue')
   },
   { path: '*', redirect: '/players' }
 ]
