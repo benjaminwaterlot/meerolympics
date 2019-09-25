@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gray-100 p-4 sm:p-8 min-h-screen">
     <PlayerSelection
-      v-if="currentlySelecting"
+      v-if="currentlySelecting !== null"
       :select-id="currentlySelecting"
       :players="players"
       @choose="choosePlayer"
