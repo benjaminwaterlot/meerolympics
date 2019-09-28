@@ -1,14 +1,7 @@
-// import Home from '@/views/Home'
 import CheckLogin from '@/views/CheckLogin'
 import Menu from '@/views/Menu/Menu.vue'
 
 export default [
-  // {
-  //   path: '/home',
-  //   name: 'home',
-  //   component: Home,
-  //   meta: { authNotRequired: true }
-  // },
   {
     path: '/menu',
     name: 'menu',
@@ -35,6 +28,13 @@ export default [
     meta: { authNotRequired: true }
   },
   {
+    path: '/players/:id',
+    name: 'player-profile',
+    component: () =>
+      import(/* webpackChunkName: "client-chunk-players" */ '@/views/Players/PlayerProfile.vue'),
+    meta: { authNotRequired: true }
+  },
+  {
     path: '/matches',
     name: 'matches',
     component: () =>
@@ -45,7 +45,10 @@ export default [
     path: '/matches/create',
     name: 'matches-create',
     component: () =>
-      import(/* webpackChunkName: "client-chunk-create-match" */ '@/views/CreateMatch/CreateMatch.vue')
+      import(
+        /* webpackChunkName: "client-chunk-create-match" */ '@/views/CreateMatch/CreateMatch.vue'
+      ),
+    meta: { authNotRequired: true } // @TODO: To remove
   },
   { path: '*', redirect: '/players' }
 ]

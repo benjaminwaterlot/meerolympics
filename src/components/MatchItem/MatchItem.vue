@@ -1,17 +1,10 @@
 <template>
   <button
-    :class="[
-      'mee-card',
-      'block',
-      'bg-white',
-      'w-full lg:w-3/5',
-      'py-2 px-4 my-3 mx-auto',
-      'rounded-lg'
-    ]"
+    :class="['mee-card', 'block', 'bg-white', 'w-full lg:w-3/5', 'py-2 px-4 my-3', 'rounded-lg']"
   >
     <div :class="['flex justify-between flex-wrap']">
       <div
-        v-for="(team, index) in teams"
+        v-for="team in teams"
         :key="team.id"
         :class="['flex justify-between flex-col', 'w-full sm:w-1/2']"
       >
@@ -42,8 +35,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import Elo from '@/components/Elo/Elo.vue'
 import { groupBy } from 'ramda'
+import Elo from '@/components/Elo/Elo.vue'
 
 export default {
   name: 'MatchItem',

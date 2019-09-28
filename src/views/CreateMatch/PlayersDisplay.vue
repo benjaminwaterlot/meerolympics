@@ -3,7 +3,6 @@
     <Title icon="users" text="Select players" class="mb-12" />
     <PlayerDisplay
       v-for="player in teams[0]"
-      :id="player._id"
       :key="player._id"
       v-bind="player"
       place="left"
@@ -24,7 +23,6 @@
     </div>
     <PlayerDisplay
       v-for="player in teams[1]"
-      :id="player._id"
       :key="player._id"
       v-bind="player"
       place="right"

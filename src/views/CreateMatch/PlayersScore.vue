@@ -61,10 +61,10 @@
 </template>
 
 <script>
+import { groupBy } from 'ramda'
+import { mapActions, mapGetters } from 'vuex'
 import Title from '@/components/Title/Title.vue'
 import Loader from '@/components/Loader/Loader.vue'
-import { groupBy } from 'ramda'
-import { mapActions } from 'vuex'
 
 export default {
   name: 'PlayersScore',
@@ -85,14 +85,18 @@ export default {
   }),
   computed: {
     teams() {
-      const teams = Object.values(groupBy(({ team }) => team, this.players))
+      const playersWithInfos = this.players.map(player => ({
+        ...player,
+        ...this.getEmployeeOrPlayer(player._id)
+      }))
+      const teams = Object.values(groupBy(({ team }) => team, playersWithInfos))
       return teams
     },
     ready() {
-      console.log(Object.keys(this.scores))
       const scores = Object.keys(this.scores)
       return this.winner && scores.length > 1 && scores.every(score => score)
-    }
+    },
+    ...mapGetters('players', ['getEmployeeOrPlayer'])
   },
   methods: {
     ...mapActions('matches', ['submitMatch']),

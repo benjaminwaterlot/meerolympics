@@ -17,6 +17,7 @@ import {
   faFlagCheckered,
   faUserAstronaut,
   faBars,
+  faFutbol,
   faTrophy
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -46,6 +47,7 @@ library.add([
   faFlagCheckered,
   faUserAstronaut,
   faBars,
+  faFutbol,
   faTrophy
 ])
 

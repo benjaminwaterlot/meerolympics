@@ -3,17 +3,17 @@
     <Title icon="star" text="Recent matchs" />
     <Loader v-if="loading" class="mx-auto my-20" />
     <div v-for="match in sortedMatches" :key="match._id">
-      <MatchItem v-bind="match" />
+      <MatchItem v-bind="match" class="mx-auto" />
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import moment from 'moment'
 import MatchItem from '@/components/MatchItem/MatchItem.vue'
 import Title from '@/components/Title/Title.vue'
 import Loader from '@/components/Loader/Loader.vue'
-import moment from 'moment'
 
 export default {
   name: 'Matches',
@@ -29,7 +29,7 @@ export default {
   computed: {
     ...mapState('settings', ['sport']),
     sortedMatches() {
-      return this.matches
+      return [...this.matches]
         .sort((a, b) => {
           return new Date(a.createdAt) > new Date(b.createdAt) ? -1 : 1
         })

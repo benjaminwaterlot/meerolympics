@@ -1,29 +1,25 @@
 export default {
-  fetchMatches: async ({ rootGetters }) => {
-    const { data } = await rootGetters['app/client'].get('matches', {
-      params: { sport: 'babyfoot' }
-    })
+  fetchMatches: ({ rootGetters, rootState }, player) =>
+    rootGetters['app/client']
+      .get('matches', { params: { sport: rootState.settings.sport, player } })
+      .then(({ data }) => data),
 
-    return data
-  },
   submitMatch: async ({ rootGetters, commit, rootState }, match) => {
-    const participants = match.participants.map(player => {
-      return {
-        player: player._id,
-        team: player.team,
-        result: match.winner === player.team ? 'win' : 'loss',
-        score: Number(match.scores[player.team] || 0)
-      }
+    // Create the match object for back-end use.
+    const participants = match.participants.map(({ _id, team }) => ({
+      player: _id,
+      team,
+      result: match.winner === team ? 'win' : 'loss',
+      score: Number(match.scores[team] || 0)
+    }))
+
+    const { data } = await rootGetters['app/client'].post('/matches', {
+      match: { participants, sport: rootState.settings.sport }
     })
 
-    const sport = rootState.settings.sport
-
-    const req = await rootGetters['app/client'].post('/matches', {
-      match: { participants, sport }
-    })
-
+    // Remove players from local store: their elo has changed, data is obsolete.
     match.participants.map(({ _id }) => commit('players/resetPlayer', _id, { root: true }))
 
-    return req.data
+    return data
   }
 }

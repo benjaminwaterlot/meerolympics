@@ -29,12 +29,12 @@
         <div v-if="!networkOnLine" class="nav-item offline-label">Offline</div>
       </nav>
 
-      <img
+      <router-link
         v-if="isUserLoggedIn && networkOnLine"
-        class="user-picture"
-        :src="player.photo"
-        alt="Avatar"
-      />
+        :to="{ name: 'player-profile', params: { id: user._id } }"
+      >
+        <img class="user-picture" :src="player.photo" alt="Avatar" />
+      </router-link>
     </div>
   </header>
 </template>

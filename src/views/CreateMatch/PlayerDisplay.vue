@@ -1,15 +1,15 @@
 <template>
   <div class="flex my-4" :class="place === 'left' ? 'justify-start' : 'justify-end'">
     <button :class="['w-full md:w-2/3 lg:w-2/5', 'p-4', 'bg-white rounded-lg', 'mee-card']">
-      <div v-if="id" class="flex items-center">
-        <img :src="photo" class="rounded-full h-16 w-16 mr-4" />
+      <div v-if="_id" class="flex items-center">
+        <img :src="employee.photo" class="rounded-full h-16 w-16 mr-4" />
         <div class="flex-grow flex justify-between items-center">
           <p class="text-left flex-grow">
             <span class="text-2xl text-gray-700 font-bold">
-              {{ firstName }}
+              {{ employee.firstName }}
             </span>
             <br />
-            <span class="text-sm text-gray-500 font-light">{{ lastName }}</span>
+            <span class="text-sm text-gray-500 font-light">{{ employee.lastName }}</span>
           </p>
           <Elo :elo="elo" class="text-lg" />
           <button class="ml-3 -mt-2 self-start text-gray-500" @click="$emit('cancel', selectId)">
@@ -17,6 +17,7 @@
           </button>
         </div>
       </div>
+
       <div v-else class="flex items-center" @click="$emit('select', selectId)">
         <div class="rounded-full h-16 w-16 bg-gray-300 mr-4" />
         <div class="flex-grow">
@@ -29,8 +30,10 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 import Elo from '@/components/Elo/Elo.vue'
+
+const id = '_id'
 
 export default {
   name: 'PlayerDisplay',
@@ -38,16 +41,7 @@ export default {
     Elo
   },
   props: {
-    firstName: {
-      type: String
-    },
-    lastName: {
-      type: String
-    },
-    id: {
-      type: String
-    },
-    photo: {
+    [id]: {
       type: String
     },
     selectId: {
@@ -59,26 +53,26 @@ export default {
     }
   },
   computed: {
-    ...mapState('players', ['players']),
     ...mapState('settings', ['sport']),
-    fullPlayer() {
-      if (!this.id) return null
-      return this.players[this.id]
+    ...mapGetters('players', ['getPlayer', 'getEmployee']),
+    player() {
+      return this._id ? this.getPlayer(this._id) : null
+    },
+    employee() {
+      return this._id ? this.getEmployee(this._id) : null
     },
     elo() {
-      if (!this.fullPlayer) return null
-      const sport =
-        this.fullPlayer.sports && this.fullPlayer.sports.find(({ id }) => id === this.sport)
+      if (!this.player) return null
+      const sport = this.player.sports && this.player.sports.find(({ id }) => id === this.sport)
 
       return (sport && sport.elo) || null
     }
   },
   watch: {
-    id: {
+    _id: {
       immediate: true,
-      async handler(id) {
-        if (!id) return
-        return this.fetchPlayer(id)
+      async handler(_id) {
+        return _id ? this.fetchPlayer(_id) : null
       }
     }
   },
@@ -87,9 +81,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.wrapper {
-  /* box-shadow: 6px 3px 6px rgba(0, 0, 0, 0.03); */
-}
-</style>

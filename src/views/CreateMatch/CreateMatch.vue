@@ -34,10 +34,10 @@ export default {
   data: () => ({
     currentlySelecting: null,
     players: [
-      { selectId: 0, team: '1' },
-      { selectId: 1, team: '1' },
-      { selectId: 2, team: '2' },
-      { selectId: 3, team: '2' }
+      { selectId: 0, team: '1', _id: null },
+      { selectId: 1, team: '1', _id: null },
+      { selectId: 2, team: '2', _id: null },
+      { selectId: 3, team: '2', _id: null }
     ],
     settingScore: false
   }),
@@ -48,9 +48,6 @@ export default {
     this.fetchEmployees()
     if (this.player) {
       Vue.set(this.players[0], '_id', this.player._id)
-      Vue.set(this.players[0], 'firstName', this.player.firstName)
-      Vue.set(this.players[0], 'lastName', this.player.lastName)
-      Vue.set(this.players[0], 'photo', this.player.photo)
     }
   },
   methods: {
@@ -61,19 +58,15 @@ export default {
       return this.players.find(({ selectId }) => selectId === id)
     },
     deselect(id) {
-      console.log(id)
       const playerSlot = this.getPlayerSlot(id)
       console.log(playerSlot)
       Vue.set(playerSlot, '_id', null)
-      Vue.set(playerSlot, 'firstName', null)
-      Vue.set(playerSlot, 'lastName', null)
-      Vue.set(playerSlot, 'photo', null)
     },
     ...mapActions('players', ['fetchEmployees']),
     choosePlayer({ selectId, employee }) {
       const playerSlot = this.players.find(player => player.selectId === selectId)
 
-      for (const [propName, prop] of Object.entries(employee)) Vue.set(playerSlot, propName, prop)
+      Vue.set(playerSlot, '_id', employee._id)
 
       this.currentlySelecting = null
     }
